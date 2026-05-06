@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Preloader from './components/Preloader';
@@ -13,13 +13,23 @@ import News from './components/News';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import FloatingTabBar from './components/FloatingTabBar';
+import useZeroGravityEasterEgg from './hooks/useZeroGravityEasterEgg';
 function App() {
   const [loading, setLoading] = useState(true);
+  const cursorRef = useRef(null);
+  useZeroGravityEasterEgg();
 
   return (
     <>
+      {/* Custom Premium Cursor */}
+      <div
+        ref={cursorRef}
+        id="custom-cursor"
+        className="fixed top-0 left-0 w-5 h-5 rounded-full pointer-events-none z-[99999] mix-blend-difference bg-white transform -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        aria-hidden="true"
+      />
       <Preloader onComplete={() => setLoading(false)} />
-      
+
       <div className={`transition-opacity duration-1000 ${loading ? 'opacity-0' : 'opacity-100'} w-full min-h-screen dark:bg-[#000000]`}>
         <Routes>
           <Route path="/" element={

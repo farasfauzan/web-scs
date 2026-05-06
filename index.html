@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Anti-Gravity Construction</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>PT. Sinar Cerah Sempurna – Membangun Masa Depan Indonesia</title>
+    <meta name="description" content="PT. Sinar Cerah Sempurna adalah kontraktor konstruksi nasional terpercaya. Spesialis gedung, infrastruktur, dan EPC berskala internasional." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,600;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet">
+    <!-- Dark mode init: runs BEFORE React to prevent flash of wrong theme -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('scs-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (saved === 'dark' || (!saved && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

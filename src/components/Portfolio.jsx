@@ -35,6 +35,38 @@ const projects = [
     fullDesc: 'Kawasan terpadu (mixed-use) seluas 50 hektar yang mengusung konsep kota mandiri berkelanjutan. 40% dari total area didedikasikan untuk ruang terbuka hijau dan danau resapan.',
     bg: 'bg-gradient-to-br from-gray-400 to-gray-600',
     stats: { luas: '50 Hektar', status: 'Tahap 1 Selesai', nilai: 'Rp 5.0 Triliun' }
+  },
+  {
+    title: 'Menara Korporat',
+    category: 'Komersial',
+    desc: 'Gedung perkantoran grade A dengan sertifikasi Platinum.',
+    fullDesc: 'Menara perkantoran cerdas yang dilengkapi sistem manajemen gedung otomatis (BMS) dan fasad kaca low-E untuk efisiensi termal.',
+    bg: 'bg-gradient-to-br from-slate-700 to-slate-900',
+    stats: { lantai: '60 Lantai', status: 'Selesai 2023', nilai: 'Rp 4.1 Triliun' }
+  },
+  {
+    title: 'Jalur Tol Trans-Hub',
+    category: 'Infrastruktur',
+    desc: 'Akses bebas hambatan pengurai kemacetan ibu kota.',
+    fullDesc: 'Proyek tol layang sepanjang 15km yang dibangun tanpa mengganggu arus lalu lintas di bawahnya berkat metode konstruksi sosrobahu.',
+    bg: 'bg-gradient-to-br from-yellow-400 to-orange-500',
+    stats: { panjang: '15 km', status: 'Selesai 2022', nilai: 'Rp 7.5 Triliun' }
+  },
+  {
+    title: 'Eco-Resort Bali',
+    category: 'Residensial',
+    desc: 'Vila mewah berkonsep menyatu dengan alam tropis.',
+    fullDesc: 'Pengembangan resor tepi tebing yang mempertahankan 80% kontur tanah asli. Dilengkapi dengan unit pengolahan air mandiri dan panel surya.',
+    bg: 'bg-gradient-to-br from-green-400 to-emerald-700',
+    stats: { luas: '12 Hektar', status: 'Tahap Desain', nilai: 'Rp 800 Miliar' }
+  },
+  {
+    title: 'Stadion Utama Sinar',
+    category: 'Komersial',
+    desc: 'Arena olahraga multifungsi berstandar internasional.',
+    fullDesc: 'Stadion berkapasitas 45.000 penonton dengan atap membran fleksibel dan sistem pencahayaan LED cerdas untuk siaran 4K.',
+    bg: 'bg-gradient-to-br from-purple-500 to-pink-600',
+    stats: { kapasitas: '45k Kursi', status: 'Penyelesaian', nilai: 'Rp 3.0 Triliun' }
   }
 ];
 
@@ -49,13 +81,13 @@ const Portfolio = () => {
     : projects.filter(p => p.category === activeTab);
 
   return (
-    <section className="relative w-full min-h-screen py-24 bg-titanium">
+    <section className="relative w-full min-h-screen py-24 bg-[#f5f5f7] dark:bg-[#000000] transition-colors duration-700">
       <div className="container mx-auto px-4 md:px-8">
         
         <div className="flex flex-col md:flex-row justify-between items-end mb-12">
           <div>
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-space-grey mb-4">
-              Daftar Proyek Unggulan
+            <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-slate-900 dark:text-white mb-4 transition-colors duration-700">
+              Proyek<br/>Unggulan.
             </h2>
             <p className="text-lg text-gray-500 max-w-xl">
               Lihatlah portofolio proyek-proyek ikonik kami yang telah selesai dengan keunggulan dan presisi tinggi.
@@ -72,10 +104,10 @@ const Portfolio = () => {
             <button
               key={cat}
               onClick={() => setActiveTab(cat)}
-              className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
+              className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${
                 activeTab === cat 
                   ? 'bg-blue-600 text-white shadow-md' 
-                  : 'bg-white text-gray-500 border border-gray-200 hover:border-blue-300 hover:text-blue-600'
+                  : 'interactive bg-transparent text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400'
               }`}
             >
               {cat}
@@ -88,18 +120,18 @@ const Portfolio = () => {
           {filteredProjects.map((proj, idx) => (
             <div 
               key={idx} 
-              className="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 flex flex-col"
+              className="interactive group relative bg-white dark:bg-[#1d1d1f] rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-2 border-0 flex flex-col"
             >
               {/* Image Placeholder */}
               <div className={`w-full h-48 ${proj.bg} relative overflow-hidden`}>
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
-                <Building2 className="absolute bottom-4 right-4 text-white opacity-20 group-hover:opacity-100 group-hover:text-yellow-300 transition-all duration-500" size={32} />
+                <Building2 className="absolute bottom-4 right-4 text-white opacity-20 group-hover:opacity-100 group-hover:text-yellow-300 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]" size={32} />
               </div>
               
               {/* Content */}
               <div className="p-6 flex-1 flex flex-col">
-                <h3 className="text-xl font-bold text-space-grey mb-2">{proj.title}</h3>
-                <p className="text-sm text-gray-500 mb-6 flex-1">{proj.desc}</p>
+                <h3 className="text-xl font-bold text-space-grey dark:text-white mb-2 transition-colors duration-700">{proj.title}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 flex-1 transition-colors duration-700">{proj.desc}</p>
                 
                 <button 
                   onClick={() => setSelectedProject(proj)}
@@ -115,12 +147,12 @@ const Portfolio = () => {
         {/* Bottom Section: Features */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
           
-          <div className="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 flex flex-col justify-center items-center">
-             <h3 className="text-2xl font-bold mb-8 w-full text-space-grey">Status Proyek Real-Time</h3>
+          <div className="bg-white dark:bg-[#1d1d1f] p-8 rounded-[3rem] shadow-sm flex flex-col justify-center items-center transition-colors duration-700">
+             <h3 className="text-2xl font-bold mb-8 w-full text-space-grey dark:text-white transition-colors duration-700">Status Proyek Real-Time</h3>
              <LiveProjectOrbit progress={78} projectName="Neo-Tokyo Tower" />
           </div>
 
-          <div className="bg-space-grey p-8 rounded-[40px] shadow-sm border border-gray-800 text-white flex flex-col justify-center items-center relative overflow-hidden">
+          <div className="bg-slate-900 p-8 rounded-[3rem] shadow-sm text-white flex flex-col justify-center items-center relative overflow-hidden">
              <h3 className="text-2xl font-bold mb-4 w-full">Blueprint Interaktif</h3>
              <p className="text-gray-400 mb-8 w-full">Proyeksikan model cetak biru skala penuh langsung di meja Anda.</p>
              <ARBlueprint />
@@ -134,15 +166,15 @@ const Portfolio = () => {
       {selectedProject && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity">
           <div 
-            className="bg-white rounded-[40px] w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl relative"
+            className="bg-white dark:bg-slate-900 rounded-[40px] w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl relative transition-colors duration-700"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button 
               onClick={() => setSelectedProject(null)}
-              className="absolute top-6 right-6 bg-white/50 backdrop-blur-md p-2 rounded-full hover:bg-gray-100 transition-colors z-10"
+              className="interactive absolute top-6 right-6 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors z-10"
             >
-              <X size={24} className="text-gray-800" />
+              <X size={24} className="text-gray-800 dark:text-white" />
             </button>
 
             {/* Modal Header Image */}
@@ -155,16 +187,16 @@ const Portfolio = () => {
 
             {/* Modal Body */}
             <div className="p-8 md:p-12">
-              <p className="text-xl text-gray-700 leading-relaxed mb-8">
+              <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8 transition-colors duration-700">
                 {selectedProject.fullDesc}
               </p>
 
               {/* Stats Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 {Object.entries(selectedProject.stats).map(([key, value]) => (
-                  <div key={key} className="bg-gray-50 p-6 rounded-3xl border border-gray-100">
+                  <div key={key} className="bg-gray-50 dark:bg-slate-800 p-6 rounded-3xl border border-gray-100 dark:border-slate-700 transition-colors duration-700">
                     <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-1 block">{key}</span>
-                    <span className="text-2xl font-bold text-blue-900">{value}</span>
+                    <span className="text-2xl font-bold text-blue-900 dark:text-blue-400">{value}</span>
                   </div>
                 ))}
               </div>

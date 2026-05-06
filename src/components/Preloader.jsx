@@ -18,7 +18,7 @@ const Preloader = ({ onComplete }) => {
     // Initial dot appears
     tl.fromTo(dotRef.current, 
       { scale: 0, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }
+      { scale: 1, opacity: 1, duration: 0.8, ease: "expo.out" }
     )
     // Dot expands into a precise architectural line
     .to(dotRef.current, { scaleX: 0, opacity: 0, duration: 0.2, delay: 0.5 })
@@ -27,8 +27,8 @@ const Preloader = ({ onComplete }) => {
       { scaleX: 1, duration: 0.8, ease: "power4.inOut" }
     )
     // Line fades out / explodes
-    .to(lineRef.current, { scaleY: 20, opacity: 0, duration: 0.4, ease: "power2.out" })
-    .to(containerRef.current, { opacity: 0, duration: 0.5, ease: "power2.inOut" });
+    .to(lineRef.current, { scaleY: 20, opacity: 0, duration: 0.6, ease: "expo.out" })
+    .to(containerRef.current, { opacity: 0, duration: 0.8, ease: "expo.out" });
 
   }, [onComplete]);
 

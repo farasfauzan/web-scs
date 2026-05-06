@@ -16,6 +16,7 @@ const Hero = () => {
   const bottomPanelRef = useRef(null);
   
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [lang, setLang] = useState('ID');
 
   // Lock body scroll when nav is open
@@ -31,7 +32,7 @@ const Hero = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // 1. Initial Reveal Animation
-      const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      const introTl = gsap.timeline({ defaults: { ease: 'expo.out' } });
       
       introTl.fromTo(logoRef.current, 
           { y: -20, opacity: 0 }, 
@@ -47,7 +48,7 @@ const Hero = () => {
         )
         .fromTo(buildingRef.current, 
           { y: 100, opacity: 0 }, 
-          { y: 0, opacity: 1, duration: 1.5, ease: 'power4.out' }, "-=1.2"
+          { y: 0, opacity: 1, duration: 1.8, ease: 'expo.out' }, "-=1.2"
         );
 
       // 2. Scroll Parallax Animation
@@ -68,11 +69,13 @@ const Hero = () => {
       );
 
       // Bring bottom panel up
-      scrollTl.fromTo(bottomPanelRef.current, 
-        { y: 300, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1 }, 
-        0
-      );
+      if (bottomPanelRef.current) {
+        scrollTl.fromTo(bottomPanelRef.current, 
+          { y: 300, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1 }, 
+          0
+        );
+      }
 
       // Parallax effect on building
       scrollTl.fromTo(buildingRef.current, 
@@ -91,8 +94,8 @@ const Hero = () => {
       gsap.to(buildingRef.current, {
         rotationY: xPos * 5,
         rotationX: -yPos * 5,
-        ease: 'power2.out',
-        duration: 1.5
+        duration: 1.5,
+        ease: 'expo.out'
       });
     };
 
@@ -105,20 +108,20 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full h-[250vh] bg-white">
+    <section ref={sectionRef} className="relative w-full h-[250vh] bg-white dark:bg-slate-950">
       
       {/* Sticky wrapper stays in view while outer container scrolls */}
       <div className="sticky top-0 w-full h-screen flex flex-col overflow-hidden">
         
         {/* HEADER AREA (White, exactly like Astra) */}
-        <header className="w-full h-24 bg-white flex items-center justify-between px-6 md:px-12 z-40 flex-shrink-0">
+        <header className="w-full h-24 bg-white dark:bg-slate-950 flex items-center justify-between px-6 md:px-12 z-40 flex-shrink-0 transition-colors duration-700">
           
           {/* Logo Area */}
           <div ref={logoRef} className="flex items-center gap-4">
             <div className="flex items-center justify-center w-14 h-14 overflow-hidden drop-shadow-sm">
               <LogoSVG />
             </div>
-            <div className="flex flex-col text-blue-900 border-l-4 border-red-500 pl-3">
+            <div className="flex flex-col text-blue-900 dark:text-blue-400 border-l-4 border-red-500 pl-3 transition-colors duration-700">
               <span className="font-extrabold text-2xl leading-none tracking-tight">SCS</span>
               <span className="text-[8px] font-bold uppercase tracking-widest mt-0.5 whitespace-nowrap">Sinar Cerah Sempurna</span>
             </div>
@@ -128,7 +131,7 @@ const Hero = () => {
           <div ref={navRef} className="flex items-center gap-3">
             <button 
               onClick={() => setLang(lang === 'ID' ? 'EN' : 'ID')}
-              className="bg-gray-100 border border-gray-200 shadow-sm px-4 py-2 rounded-full flex items-center gap-2 text-gray-700 text-sm font-bold hover:bg-gray-200 transition-all"
+              className="interactive bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-sm px-4 py-2 rounded-full flex items-center gap-2 text-gray-700 dark:text-gray-300 text-sm font-bold hover:bg-gray-200 dark:hover:bg-slate-700 transition-all duration-700"
             >
               <span className={lang === 'ID' ? 'text-blue-600' : 'text-gray-400'}>ID</span>
               <span className="text-gray-300">|</span>
@@ -137,30 +140,55 @@ const Hero = () => {
             
             <button 
               onClick={() => setIsNavOpen(true)}
-              className="bg-white border-2 border-gray-200 w-11 h-11 rounded-full flex flex-col items-center justify-center gap-1.5 hover:bg-gray-50 transition-all z-50"
+              className="interactive bg-white dark:bg-slate-900 border-2 border-gray-200 dark:border-slate-700 w-11 h-11 rounded-full flex flex-col items-center justify-center gap-1.5 hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-700 z-50"
             >
-              <span className="w-5 h-0.5 bg-gray-800 rounded-full"></span>
-              <span className="w-5 h-0.5 bg-gray-800 rounded-full"></span>
+              <span className="w-5 h-0.5 bg-gray-800 dark:bg-white rounded-full transition-colors duration-700"></span>
+              <span className="w-5 h-0.5 bg-gray-800 dark:bg-white rounded-full transition-colors duration-700"></span>
             </button>
           </div>
         </header>
 
-        {/* MAIN BLUE CARD (Full bleed width, rounded top corners) */}
+        {/* MAIN HERO CONTENT (Apple-Style Full Bleed Minimalist) */}
         <div 
           ref={cardRef}
-          className="relative w-full flex-1 rounded-t-[40px] md:rounded-t-[60px] mx-0 md:mx-4 mb-4 overflow-hidden flex bg-blue-500 shadow-inner"
-          style={{ 
-            backgroundImage: "url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&q=80&w=2000')", 
-            backgroundSize: 'cover', 
-            backgroundPosition: 'center',
-            boxShadow: 'inset 0 20px 40px rgba(0,0,0,0.1)'
-          }}
+          className="relative w-full flex-1 mx-0 flex flex-col items-center justify-center bg-transparent overflow-hidden"
         >
-          {/* Overlay gradient untuk memastikan teks terbaca jelas dengan warna biru dominan seperti Astra */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#1a66cc]/95 via-[#2b88eb]/80 to-transparent z-0"></div>
           
-          {/* 2D Interactive Building Image (Cutout style) */}
-          <div className="absolute bottom-0 right-0 md:right-12 w-full md:w-5/12 h-5/6 z-10 pointer-events-none flex items-end justify-center">
+          {/* Main Text Content (Massive Typography) */}
+          <div ref={textWrapperRef} className="absolute inset-0 w-full h-full z-20 flex flex-col items-center justify-center text-center pointer-events-auto mt-[-10vh]">
+            <h1 className="text-[5rem] md:text-[8rem] lg:text-[10rem] font-bold tracking-tighter text-slate-900 dark:text-white leading-[0.9] drop-shadow-2xl transition-colors duration-700">
+              {lang === 'ID' ? (
+                <>Masa Depan<br/>Indonesia.</>
+              ) : (
+                <>Future of<br/>Indonesia.</>
+              )}
+            </h1>
+            
+            <p className="mt-8 text-xl md:text-3xl text-slate-500 dark:text-slate-400 font-medium max-w-3xl mx-auto leading-tight tracking-tight transition-colors duration-700">
+              {lang === 'ID' 
+                ? "Sinar Cerah Sempurna. Membangun infrastruktur kelas dunia dengan harmoni dan keberlanjutan."
+                : "Sinar Cerah Sempurna. Building world-class infrastructure with harmony and sustainability."
+              }
+            </p>
+
+            <div className="mt-12 flex items-center justify-center gap-6">
+              <button 
+                onClick={() => window.scrollBy({ top: window.innerHeight * 2.5, left: 0, behavior: 'smooth' })}
+                className="interactive bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 rounded-full text-lg font-semibold transition-all hover:scale-105 flex items-center gap-3"
+              >
+                {lang === 'ID' ? "Jelajahi" : "Explore"} 
+              </button>
+              <button 
+                onClick={() => setIsVideoOpen(true)}
+                className="interactive bg-transparent text-slate-900 dark:text-white px-8 py-4 rounded-full text-lg font-semibold transition-all hover:bg-slate-200 dark:hover:bg-slate-800 flex items-center gap-2"
+              >
+                {lang === 'ID' ? "Tonton Video" : "Watch Film"} <ArrowRight size={18} />
+              </button>
+            </div>
+          </div>
+
+          {/* 3D Interactive Building Image (Product Reveal Style) */}
+          <div className="absolute bottom-[-10vh] left-1/2 -translate-x-1/2 w-full md:w-[80vw] lg:w-[60vw] h-[70vh] z-10 pointer-events-none flex items-end justify-center">
             <div 
               ref={buildingRef} 
               className="relative w-full h-full flex items-end justify-center origin-bottom"
@@ -169,83 +197,22 @@ const Hero = () => {
               <img 
                 src="/gedung-transparan.png" 
                 alt="Gedung SCS" 
-                className="w-full h-[110%] object-contain object-bottom drop-shadow-2xl"
+                className="w-full h-full object-contain object-bottom drop-shadow-[0_40px_80px_rgba(0,0,0,0.3)] dark:drop-shadow-[0_40px_80px_rgba(255,255,255,0.05)] transition-all duration-700"
                 onError={(e) => {
-                  e.target.src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800";
-                  e.target.className = "w-full h-full object-cover rounded-t-[40px] opacity-80 mix-blend-luminosity";
+                  e.target.src = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200";
+                  e.target.className = "w-[80%] h-[80%] object-cover rounded-[3rem] shadow-2xl opacity-90 mix-blend-luminosity mb-10";
                 }}
               />
             </div>
           </div>
 
-          {/* Main Text Content (Scrolls Up) */}
-          <div ref={textWrapperRef} className="absolute top-0 left-0 w-full md:w-7/12 h-full z-20 flex flex-col justify-center px-8 md:px-20 pointer-events-auto">
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tight text-white leading-[1.05] mb-8 drop-shadow-sm">
-              {lang === 'ID' ? (
-                <>Untuk Hari Ini<br/>dan Masa<br/>Depan<br/>Indonesia</>
-              ) : (
-                <>For Today<br/>and the<br/>Future of<br/>Indonesia</>
-              )}
-            </h1>
-            
-            {/* Merah Putih Flag Accent */}
-            <div className="flex flex-col w-48 mb-10 shadow-lg">
-              <div className="h-4 bg-red-600 w-full"></div>
-              <div className="h-4 bg-white w-full"></div>
-            </div>
-
-            <p className="text-xl md:text-2xl text-white font-medium max-w-xl mb-12 leading-snug drop-shadow-sm">
-              {lang === 'ID' 
-                ? "Melalui Sinar Cerah 2030 Sustainability Aspirations, kami melangkah pasti dalam perjalanan untuk menjadi perusahaan yang lebih sustainable dan resilient pada tahun 2030 dan ke depannya."
-                : "Through Sinar Cerah 2030 Sustainability Aspirations, we are taking decisive steps on our journey to become a more sustainable and resilient company by 2030 and beyond."
-              }
-            </p>
-
-            <div>
-              <button 
-                onClick={() => window.scrollBy({ top: window.innerHeight * 2.5, left: 0, behavior: 'smooth' })}
-                className="group bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-4 rounded-full text-base font-bold transition-all shadow-xl hover:shadow-2xl flex items-center gap-3 border border-orange-400/30"
-              >
-                {lang === 'ID' ? "Baca Selengkapnya" : "Read More"} 
-                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-              </button>
-            </div>
-          </div>
-
-          {/* Bottom Panel (Scrolls Up from bottom) */}
-          <div ref={bottomPanelRef} className="absolute -bottom-10 left-0 w-full md:w-7/12 z-20 flex flex-col justify-end px-8 md:px-20 pb-20 pointer-events-auto">
-            
-            {/* Floating Icons with Logo Colors on Hover */}
-            <div className="flex flex-wrap gap-4 md:gap-6 mb-10 pl-4">
-              {[
-                { icon: <Leaf size={28}/>, color: "hover:text-blue-400 hover:border-blue-400" },
-                { icon: <Droplets size={28}/>, color: "hover:text-orange-400 hover:border-orange-400" },
-                { icon: <Wind size={28}/>, color: "hover:text-yellow-400 hover:border-yellow-400" },
-                { icon: <Zap size={28}/>, color: "hover:text-red-400 hover:border-red-400" },
-                { icon: <Factory size={28}/>, color: "hover:text-blue-400 hover:border-blue-400" }
-              ].map((item, i) => (
-                <div key={i} className={`w-16 h-16 bg-white/10 backdrop-blur-md border-2 border-white/40 rounded-full flex items-center justify-center text-white shadow-lg transform transition-all hover:scale-110 ${item.color}`}>
-                  {item.icon}
-                </div>
-              ))}
-            </div>
-
-            {/* Solar Panel Image */}
-            <div className="w-full bg-white/10 backdrop-blur-sm p-3 rounded-3xl shadow-2xl border border-white/20">
-              <img 
-                src="https://images.unsplash.com/photo-1509391366360-1e97f52ce88b?auto=format&fit=crop&q=80&w=1200" 
-                alt="Solar Panels" 
-                className="w-full h-48 md:h-72 object-cover rounded-2xl"
-              />
-            </div>
-          </div>
         </div>
 
         {/* FULLSCREEN NAVIGATION OVERLAY */}
         {isNavOpen && (
-          <div className="fixed inset-0 z-50 bg-white flex flex-col">
+          <div className="fixed inset-0 z-50 bg-white dark:bg-slate-950 flex flex-col transition-colors duration-700">
             {/* Modal Header */}
-            <div className="w-full h-24 bg-white flex items-center justify-between px-6 md:px-12 flex-shrink-0 border-b border-gray-100">
+            <div className="w-full h-24 bg-white dark:bg-slate-950 flex items-center justify-between px-6 md:px-12 flex-shrink-0 border-b border-gray-100 dark:border-slate-800 transition-colors duration-700">
               <div className="flex items-center gap-4">
                 <div className="flex items-center justify-center w-14 h-14 overflow-hidden drop-shadow-sm">
                   <LogoSVG />
@@ -254,7 +221,7 @@ const Hero = () => {
               
               <button 
                 onClick={() => setIsNavOpen(false)}
-                className="bg-gray-100 p-3 rounded-full hover:bg-gray-200 transition-all text-gray-800"
+                className="interactive bg-gray-100 dark:bg-slate-800 p-3 rounded-full hover:bg-gray-200 dark:hover:bg-slate-700 transition-all duration-700 text-gray-800 dark:text-white"
               >
                 <X size={24} />
               </button>
@@ -262,28 +229,65 @@ const Hero = () => {
 
             {/* Menu Links */}
             <div className="flex-1 flex flex-col justify-center px-12 md:px-24">
-              <nav className="flex flex-col gap-8 text-4xl md:text-6xl font-bold tracking-tight text-blue-900">
-                {['Beranda', 'Tentang Kami', 'Portofolio', 'Hubungan Investor', 'Karir', 'Kontak'].map((item, i) => (
-                  <a 
+              <nav className="flex flex-col gap-8 text-4xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white transition-colors duration-700">
+                {[
+                  {name: 'Beranda', id: 'home'}, 
+                  {name: 'Tentang Kami', id: 'about'}, 
+                  {name: 'Layanan', id: 'services'}, 
+                  {name: 'Portofolio', id: 'portfolio'}, 
+                  {name: 'Keberlanjutan', id: 'sustainability'},
+                  {name: 'Hubungan Investor', id: 'investor'},
+                  {name: 'Pusat Media', id: 'news'},
+                  {name: 'Kontak', id: 'contact'}
+                ].map((item, i) => (
+                  <button 
                     key={i} 
-                    href="#" 
-                    onClick={(e) => { e.preventDefault(); setIsNavOpen(false); }}
-                    className="hover:text-orange-500 hover:translate-x-4 transition-all duration-300 w-max"
+                    onClick={(e) => { 
+                      e.preventDefault(); 
+                      setIsNavOpen(false); 
+                      document.getElementById(item.id)?.scrollIntoView({behavior: 'smooth'});
+                    }}
+                    className="interactive hover:text-orange-500 hover:translate-x-4 transition-all duration-500 w-max text-left"
                   >
-                    {item}
-                  </a>
+                    {item.name}
+                  </button>
                 ))}
               </nav>
             </div>
 
             {/* Modal Footer */}
-            <div className="p-8 md:p-12 border-t border-gray-100 flex flex-col md:flex-row justify-between text-gray-500 font-medium">
+            <div className="p-8 md:p-12 border-t border-gray-100 dark:border-slate-800 flex flex-col md:flex-row justify-between text-gray-500 dark:text-gray-400 font-medium transition-colors duration-700">
               <p>&copy; 2024 PT Sinar Cerah Sempurna</p>
               <div className="flex gap-6 mt-4 md:mt-0">
                 <a href="#" className="hover:text-blue-600">LinkedIn</a>
                 <a href="#" className="hover:text-blue-600">Instagram</a>
                 <a href="#" className="hover:text-blue-600">Twitter</a>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* VIDEO MODAL OVERLAY */}
+        {isVideoOpen && (
+          <div className="fixed inset-0 z-[110] bg-black/90 backdrop-blur-md flex flex-col items-center justify-center transition-all duration-700">
+            <button 
+              onClick={() => setIsVideoOpen(false)}
+              className="absolute top-8 right-8 interactive bg-white/10 p-3 rounded-full hover:bg-white/20 transition-all duration-300 text-white"
+            >
+              <X size={32} />
+            </button>
+            
+            <div className="w-11/12 md:w-3/4 max-w-5xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl relative">
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" 
+                title="Company Profile Video" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+                className="w-full h-full object-cover"
+              ></iframe>
             </div>
           </div>
         )}

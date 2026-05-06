@@ -16,7 +16,7 @@ const Welcome = () => {
           opacity: 1,
           duration: 1.5,
           stagger: 0.2,
-          ease: "power4.out",
+          ease: "expo.out",
           delay: 0.5
         }
       );
@@ -31,7 +31,7 @@ const Welcome = () => {
           delay: 2,
           yoyo: true,
           repeat: -1,
-          ease: "power1.inOut"
+          ease: "expo.out"
         }
       );
     }, containerRef);

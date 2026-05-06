@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-titanium text-space-grey overflow-x-hidden antialiased;
+  }
+}
+
+/* Custom styles that are harder to do with pure Tailwind */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+}
+
+.magnetic-item {
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Preloader animation styles */
+.preloader-line {
+  transition: width 1s cubic-bezier(0.76, 0, 0.24, 1);
+}
